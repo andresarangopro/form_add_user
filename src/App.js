@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import Display from './components/Display/Display';
+import Panel from './components/Panel/Panel';
+import calculate from './logic/calculate';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+	state = {
+		total: '0',
+		next: null,
+		operation: null,
+	};
+
+	handleClick = buttonName => {
+		this.setState(calculate(this.state, buttonName));
+	};
+
+	render() {
+		return (
+			<div className="component-app">
+				<Display value={this.state.next || this.state.total || '0'} />
+				<Panel clickHandler={this.handleClick} />
+			</div>
+		);
+	}
 }
 
 export default App;
